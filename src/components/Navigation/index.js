@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => {
 
-    const [logged, setLogged] = useState({ isAuth: false })
+    const [logged, setLogged] = useState({})
 
     useEffect(() => {
         verifyLogin()
@@ -48,7 +48,7 @@ const Navigation = () => {
                                 <li><Link to="/jobs/detail/1020">Job detail</Link></li>
                                 <li><Link to="/jobs/apply/1020">Apply for job</Link></li>
                                 {/* {
-                  this.state.isAuth && (
+                  logged && (
                     <li><Link to="/jobs/create">Post a job</Link></li>
                   )
                 } */}
