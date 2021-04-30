@@ -1,13 +1,20 @@
-import React from 'react';
-
+import React, {useState,useEffect} from 'react';
 import Navigation from './../../components/Navigation';
 import ApplicantsFor from './../../components/ApplicantsFor';
 import Candidate from './../../components/Candidate';
 import Footer from './../../components/Footer';
-
 import profiles from './../../assets/data/candidates.json';
+import {getAllCandidates} from '../../services/candidates.service'
 
-const Candidates = () => (
+const Candidates = () => {
+
+  const[candidates,setCandidates]=useState([])
+  
+  useEffect(()=>{
+getAllCandidates()
+  },[])
+
+  return(
   <div className="nav-on-header smart-nav bg-alt">
     <Navigation />
 
@@ -27,6 +34,7 @@ const Candidates = () => (
 
     <Footer />
   </div>
-);
+  )
+};
 
 export default Candidates;

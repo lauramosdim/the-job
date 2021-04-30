@@ -1,10 +1,18 @@
 /* eslint-disable */
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import jobs from '../../assets/data/jobs.json'
+import {getAllJobs} from '../../services/jobs.service'
 
-const RecentJobs = () => (
-  <section>
+const RecentJobs = () => {
+
+  const[jobs,setJobs]=useState([])
+  useEffect(()=>{
+getAllJobs()
+  },[])
+
+  return(
+  
+    <section>
     <div className="container">
       <header className="section-header">
         <span>Latest</span>
@@ -40,6 +48,6 @@ const RecentJobs = () => (
       </p>
     </div>
   </section>
-);
+)};
 
 export default RecentJobs;

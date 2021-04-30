@@ -1,25 +1,46 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faUser } from '@fortawesome/fontawesome-free-solid';
+import {registerAccount} from '../../../../services/auth.service'
 
-const FormRegister=({handleSave})=>{
+const FormRegister=()=>{
 
-const [loginInfo, setLoginInfo]=useState({})
+// const [loginInfo, setLoginInfo]=useState({})
 
-const handleChange=(evt) =>{
-    setLoginInfo({
-      [evt.target.id]: evt.target.value,
-    });
-  }
+// const handleChange=(evt) =>{
+//     setLoginInfo({
+//       [evt.target.name]: evt.target.value,
+//         });
+//   }
 
-  const handleSubmit=(evt)=> {
+const [form, setForm]=useState({})
+
+const handleChange=({target})=>{
+  const {name,value}=target
+
+  setForm({...form,[name]:value})
+}
+
+  const handleSubmit=async(evt)=> {
     evt.preventDefault();
-    handleSave(loginInfo);
+    // handleSave(form);
+    const newUser={
+      ...form,
+      role:'candidate'
+      }
+
+      try {
+        const userRegistered=await registerAccount(newUser)
+        console.log('soy un nuevo usuario',userRegistered)
+        
+      } catch (error) {
+        console.error(error)
+        
+      }
   }
 
-
-  const validateForm=() =>{
-        const { name, email, password } = loginInfo;
+const validateForm=() =>{
+        const { name, email, password } = form;
     
         return (email && email.length > 0) &&
           (password && password.length > 0) &&
@@ -75,8 +96,7 @@ const handleChange=(evt) =>{
                 className="form-control"
                 placeholder="Password"
                 required
-                onChange={handleChange
-                }
+                onChange={handleChange}
               />
             </div>
           </div>
