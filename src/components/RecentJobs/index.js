@@ -1,10 +1,20 @@
 /* eslint-disable */
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import jobs from '../../assets/data/jobs.json'
+import {getAllJobs} from '../../services/jobs.service'
 
-const RecentJobs = () => (
-  <section>
+const RecentJobs = () => {
+
+  const[jobs,setJobs]=useState([])
+
+  useEffect(async ()=>{
+    const jobsInfo= await getAllJobs()
+    setJobs(jobsInfo)
+  },[])
+
+  return(
+  
+    <section>
     <div className="container">
       <header className="section-header">
         <span>Latest</span>
@@ -12,7 +22,7 @@ const RecentJobs = () => (
       </header>
 
       <div className="row item-blocks-connected">
-        {jobs.map((job) => (
+        {jobs.length?jobs.map((job) => (
           <div className="row item-blocks-connected" key={job.id}>
             <div className="col-xs-12">
               <a className="item-block" href="/">
@@ -30,7 +40,7 @@ const RecentJobs = () => (
               </a>
             </div>
           </div>
-        ))
+        )):'loading'
         }
       </div>
 
@@ -40,6 +50,6 @@ const RecentJobs = () => (
       </p>
     </div>
   </section>
-);
+)};
 
 export default RecentJobs;
