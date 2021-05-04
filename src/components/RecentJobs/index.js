@@ -6,8 +6,10 @@ import {getAllJobs} from '../../services/jobs.service'
 const RecentJobs = () => {
 
   const[jobs,setJobs]=useState([])
-  useEffect(()=>{
-getAllJobs()
+
+  useEffect(async ()=>{
+    const jobsInfo= await getAllJobs()
+    setJobs(jobsInfo)
   },[])
 
   return(
@@ -20,7 +22,7 @@ getAllJobs()
       </header>
 
       <div className="row item-blocks-connected">
-        {jobs.map((job) => (
+        {jobs.length?jobs.map((job) => (
           <div className="row item-blocks-connected" key={job.id}>
             <div className="col-xs-12">
               <a className="item-block" href="/">
@@ -38,7 +40,7 @@ getAllJobs()
               </a>
             </div>
           </div>
-        ))
+        )):'loading'
         }
       </div>
 

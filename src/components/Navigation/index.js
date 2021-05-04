@@ -16,6 +16,10 @@ const Navigation = () => {
         }
     }
 
+    const localUser =JSON.parse(localStorage.getItem('THE_JOB_APP'))
+    const user=localUser?localUser:null 
+
+
     return (
         <>
             <nav className="navbar">
@@ -34,8 +38,8 @@ const Navigation = () => {
                         </div>
                     </div>
                     <div className="pull-right user-login">
-                        <Link to="/login" className="btn btn-sm btn-primary">login</Link>
-            or <Link to="/register">register</Link>
+                        <Link to={user?`/user/${user.name}`:'/login' } className="btn btn-sm btn-primary"> {user?user.name:'login' }</Link>
+            or <Link to={user?`/`:'/register' } > {user?'Logout':'Register' }</Link>
                     </div>
                     <ul className="nav-menu">
                         <li>

@@ -1,7 +1,7 @@
 const getAllJobs=async ()=>{
 
 try{
-    const response = await fetch('http://localhost:3004/api/jobs')
+    const response = await fetch('http://localhost:3004/api/users')
     const jobs= await response.json()
     return jobs
 }
