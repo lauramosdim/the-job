@@ -17,7 +17,11 @@ const getJob=async (id)=>{
     try{
         const response = await fetch(`${API_URL_BASE}/api/jobs/${id}`)
         const job= await response.json()
-        return job
+
+        if (job&&job.id) {
+          return job
+        } return null
+        
     }
     catch (error){
     throw Error('something went wrong')

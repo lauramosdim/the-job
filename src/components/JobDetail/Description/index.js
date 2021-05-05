@@ -1,55 +1,70 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import {useParams} from 'react-router-dom'
+import {getJob} from '../../../services/jobs.service'
 
-const JobDescription = () => (
+const JobDescription = () => {
+  const {id}=useParams()
+
+  const [jobDetail,setJobDetail]=useState(null)
+
+  const getJobDetail=async()=>{
+   const job= await getJob(id)
+   setJobDetail(job)
+  }
+
+useEffect(()=>{
+  getJobDetail()
+},[id])
+
+console.log('jobDetail',jobDetail)
+
+return(
   <div className="container">
-    <div className="header-detail">
-      <img className="logo" src="/img/logo-google.jpg" alt="google Logo" />
+ {jobDetail?( <div className="header-detail">
+      <img className="logo" src={jobDetail.image} alt="google Logo" />
       <div className="hgroup">
-        <h1>Senior front-end developer</h1>
-        <h3><a href="/">Google</a></h3>
+        <h1> {jobDetail.title}</h1>
+        <h3><a href={`https://www.${jobDetail.company}.com/`}>
+                {jobDetail.company}
+            </a>
+        </h3>
       </div>
-      <time>2 days ago</time>
+      <time> {jobDetail.ago}</time>
       <hr />
       <p className="lead">
-        You will help Google build next-generation web applications like Gmail,
-        Google Docs, Google Analytics, and the Google eBookstore and eBook readers.
-        As a Front End Engineer at Google, you will specialize in building responsive
-        and elegant web UIs with AJAX and similar technologies. You may design or work
-        on frameworks for building scalable frontend applications. We are looking for
-        engineers who are passionate about and have experience building leading-edge
-        user experience, including dynamic consumer experiences.
+      {jobDetail.about}
       </p>
 
       <ul className="details cols-3">
         <li>
           <i className="fa fa-map-marker" />
-          <span>Menlo Park, CA</span>
+          <span>{jobDetail.location}</span>
         </li>
 
         <li>
           <i className="fa fa-briefcase" />
-          <span>Full time</span>
+          <span>{jobDetail.type}</span>
         </li>
 
         <li>
           <i className="fa fa-money" />
-          <span>$90,000 - $110,000 / year</span>
+          <span>{jobDetail.salary}</span>
         </li>
 
         <li>
           <i className="fa fa-clock-o" />
-          <span>40h / week</span>
+          <span>{jobDetail.hours}</span>
         </li>
 
         <li>
           <i className="fa fa-flask" />
-          <span>2+ years experience</span>
+          <span>{jobDetail.experience}</span>
         </li>
 
         <li>
           <i className="fa fa-certificate" />
-          <a href="/">Master or Bachelor</a>
+          <a href="/">{jobDetail.certificate}</a>
         </li>
       </ul>
 
@@ -83,9 +98,8 @@ const JobDescription = () => (
           <Link className="btn btn-success" to="/jobs/apply/1020">Apply now</Link>
         </div>
       </div>
-
-    </div>
+    </div>):null}
   </div>
-);
+)};
 
 export default JobDescription;

@@ -3,7 +3,9 @@ import React, {useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {getAllJobs} from '../../services/jobs.service'
 
+
 const RecentJobs = () => {
+
 
   const[jobs,setJobs]=useState([])
 
@@ -12,6 +14,7 @@ const RecentJobs = () => {
     setJobs(jobsInfo)
   },[])
 
+ 
   return(
   
     <section>
@@ -25,7 +28,7 @@ const RecentJobs = () => {
         {jobs.length?jobs.map((job) => (
           <div className="row item-blocks-connected" key={job.id}>
             <div className="col-xs-12">
-              <a className="item-block" href="/">
+              <Link className="item-block" to={`/jobs/detail/${job.id}`}>
                 <header>
                   <img src={job.image} alt={job.company} />
                   <div className="hgroup">
@@ -37,7 +40,7 @@ const RecentJobs = () => {
                     <span className="label label-success">{job.type}</span>
                   </div>
                 </header>
-              </a>
+              </Link>
             </div>
           </div>
         )):'loading'
