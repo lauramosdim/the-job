@@ -39,7 +39,16 @@ const Navigation = () => {
                     </div>
                     <div className="pull-right user-login">
                         <Link to={user?`/user/${user.name}`:'/login' } className="btn btn-sm btn-primary"> {user?user.name:'login' }</Link>
-            or <Link to={user?`/`:'/register' } > {user?'Logout':'Register' }</Link>
+            or {user === null ? (
+            <Link to="/register">Register</Link>
+          ) : (
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => localStorage.clear()}
+            >
+              Logout
+            </button>
+          )}
                     </div>
                     <ul className="nav-menu">
                         <li>
